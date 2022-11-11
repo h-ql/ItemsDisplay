@@ -1,21 +1,26 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using ItemsDisplay.Models;
+using System.Text.Json;
+using ItemsDisplay.Data;
+using ItemsDisplay.Services;
 
 namespace ItemsDisplay.Controllers;
 
 public class HomeController : Controller
 {
+    private readonly ICharacterService _service;
     private readonly ILogger<HomeController> _logger;
 
-    public HomeController(ILogger<HomeController> logger)
+    public HomeController(ILogger<HomeController> logger, ICharacterService service)
     {
+        _service = service;
         _logger = logger;
     }
 
-    public IActionResult Index()
+    public ActionResult<IEnumerable<Character>> Index()
     {
-        return View();
+        return View(_service.GetAll());
     }
 
     public IActionResult Privacy()

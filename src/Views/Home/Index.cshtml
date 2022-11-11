@@ -1,8 +1,19 @@
-﻿@{
+﻿@model IEnumerable<ItemsDisplay.Models.Character>
+@inject IConfiguration Configuration
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Display @Configuration["GameCharacterType"] character information </h1>
+</div>
+
+<hr>
+
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 g-4">
+    @foreach (var item in Model)
+    {
+       <partial name="_ItemCard" model="item" />
+    }   
 </div>

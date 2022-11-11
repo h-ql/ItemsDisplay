@@ -1,9 +1,17 @@
+using ItemsDisplay.Data;
+using ItemsDisplay.Services;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+builder.Services.ConfigureSQLite(builder.Configuration);
+builder.Services.ConfigureDI();
+
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

@@ -1,0 +1,20 @@
+
+@model ItemsDisplay.Models.Character
+
+<div class="col">
+	<div class="card h-100">
+		<img src="@Model.ImgURL" class="card-img-top" alt="...">
+		<div class="card-body">
+			<h5 class="card-title">
+				<a asp-controller="Character">
+					
+					@Model.Name
+				</a>
+			</h5>
+			<p class="card-text">@Model.Description</p>
+		</div>
+		<div class="card-footer user-select-none">
+			
+		</div>
+	</div>
+</div>
