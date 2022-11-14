@@ -23,6 +23,24 @@ public class HomeController : Controller
         return View(_service.GetAll());
     }
 
+    [HttpGet("/api/Items")]
+    public ActionResult<IEnumerable<Character>> GetAllItems()
+    {
+        return Ok(_service.GetAll());
+    }
+
+
+    [HttpGet("/api/Items/{id:int}")]
+    public ActionResult<Character> GetItemByID(int id)
+    {
+        try {
+            return Ok( _service.GetByID(id));
+        } 
+        catch (NullReferenceException) {
+            return NotFound();
+        }
+    }
+
     public IActionResult Privacy()
     {
         return View();

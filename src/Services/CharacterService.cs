@@ -15,4 +15,13 @@ public class CharacterService : ICharacterService
     {
         return _ctx.Characters.ToArray();
     }
+    public Character GetByID(int id)
+    {
+        var output = _ctx.Characters.FirstOrDefault(i => id == i.Id);
+        if (output == null)
+        { 
+            throw new NullReferenceException("Item not found");
+        }
+        return output;
+    }
 }
