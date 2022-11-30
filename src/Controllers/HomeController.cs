@@ -25,6 +25,34 @@ public class HomeController : Controller
         return View(_service.GetAll());
     }
 
+    [HttpGet("/api/Items/{whereNameStartsWith?}/{orderBy?}")]
+    public ActionResult<IEnumerable<Character>> GetApi(
+        string? whereNameStartsWith,
+        string? orderBy)
+    {
+
+        Func<Character,string> orderByFunc = orderBy switch
+        {
+            "name" => item => item.Name,
+            "description" => item => item.Description,
+            _ => item => item.Name
+        };
+
+        // TODO: Inspect why this isn't returning
+        if (string.IsNullOrEmpty(whereNameStartsWith)) {
+            return Ok(
+                _service.GetAll().ToArray()
+                .OrderBy(orderByFunc)
+            );
+        }
+
+        return Ok(
+            _service.GetAll()
+                .Where(i => i.Name.StartsWith(whereNameStartsWith, true, null))
+                .OrderBy(orderByFunc)
+            );
+    }
+
     [HttpGet("/api/Items")]
     public ActionResult<IEnumerable<Character>> GetAllItems()
     {
