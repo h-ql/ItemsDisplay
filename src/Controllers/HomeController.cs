@@ -7,6 +7,7 @@ using ItemsDisplay.Services;
 
 namespace ItemsDisplay.Controllers;
 
+
 public class HomeController : Controller
 {
     private readonly ICharacterService _service;
@@ -20,6 +21,7 @@ public class HomeController : Controller
 
     public ActionResult<IEnumerable<Character>> Index()
     {
+        _logger.LogCritical("Something request this !!!");
         return View(_service.GetAll());
     }
 
