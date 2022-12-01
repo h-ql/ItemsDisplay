@@ -12,7 +12,7 @@ public static class ServiceExtension
                 .ReadFrom.Configuration(context.Configuration)
                 .ReadFrom.Services(services)
                 .Enrich.FromLogContext()
-                .WriteTo.Console(theme: AnsiConsoleTheme.Code));
+                .WriteTo.Console(theme: AnsiConsoleTheme.Code, applyThemeToRedirectedOutput: true));
     }
 
     public static void ConfigureSQLite(this IServiceCollection svcs, IConfiguration cfg)

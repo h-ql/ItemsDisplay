@@ -19,11 +19,24 @@ public class HomeController : Controller
         _logger = logger;
     }
 
-    public ActionResult<IEnumerable<Character>> Index()
+    // public ActionResult<IEnumerable<Character>> Index()
+    // {
+    //     _logger.LogCritical("Something request this !!!");
+    //     return View(_service.GetAll());
+    // }
+
+    public ActionResult<CharacterAttributeViewModel> Index(string characterAttribute, string searchString)
     {
-        _logger.LogCritical("Something request this !!!");
-        return View(_service.GetAll());
+        return View(_service.GetByAttrAndSearchString(characterAttribute, searchString));
     }
+
+    // public ActionResult Index(string searchString)
+    // {
+    //     return View(_service.GetNameByString(searchString));
+    // }
+
+
+
 
     [HttpGet("/api/Items/{whereNameStartsWith?}/{orderBy?}")]
     public ActionResult<IEnumerable<Character>> GetApi(
