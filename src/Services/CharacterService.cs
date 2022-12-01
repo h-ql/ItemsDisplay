@@ -29,8 +29,13 @@ public class CharacterService : ICharacterService
 
         if(!String.IsNullOrEmpty(searchString))
         {
-            heros = heros.Where(s => s.Name!.Contains(searchString));
-        }
+            heros = heros.Where(s => s.Name!.ToLower().Contains(searchString.Trim().ToLower()));
+                        
+                        //  .Where(s => s.Name!.ToUpper().Contains(searchString));
+                        //  .Where(s => s.Name!.StartsWith(searchString, System.StringComparison.CurrentCultureIgnoreCase));           
+        }   
+
+        
 
         if (!String.IsNullOrEmpty(characterAttribute))
         {

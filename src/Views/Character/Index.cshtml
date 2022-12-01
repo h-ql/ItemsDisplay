@@ -1,7 +1,69 @@
+﻿@* @model IEnumerable<ItemsDisplay.Models.Character> *@
 @model ItemsDisplay.Models.CharacterAttributeViewModel
+@inject IConfiguration Configuration
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Home Page";
 }
 
-<h1> Character sites</h1>
+<div class="text-center">
+    <h1 class="display-3"><strong>Display @Configuration["GameCharacterType"] character information </strong></h1>
+</div>
+
+<hr>
+
+@* <div class="col">
+    <a asp-controller="Character" asp-action="Create" class="btn btn-success btn-lg btn-block text-uppercase mb-3">Add Hero</a>       
+</div> *@
+
+<div class="col">
+        <a asp-controller="Character" asp-action="Create" class="btn btn-success btn-lg btn-block text-uppercase mb-3">Add Hero</a>       
+</div>   
+
+<form asp-controller="Home" asp-action="Index" method="get">
+    <p>
+        <select asp-for="CharacterAttribute" asp-items="Model.Attributes">
+            <option value="">All</option>
+        </select>
+
+        Character Name: <input type="text" asp-for="SearchString" />
+        <input type="submit" value="Search" />
+    </p>
+</form>
+
+@* <form asp-controller="Character" asp-action="Index" method="get">
+    <p>
+        <select asp-for="CharacterAttribute" asp-items="Model.Attributes">
+            <option value="">All</option>
+        </select>
+
+        Character Name: <input type="text" asp-for="SearchString" />
+        <input type="submit" value="Search" />
+    </p>
+</form> *@
+
+<hr>
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 g-4">
+    @foreach (var item in Model.Characters!)
+    {
+        @* <partial name="_ItemCard" model="item" /> *@
+        <div class="col">
+            <div class="card h-100">
+                <img src="@item.ImgURL" class="card-img-top" alt="Image not found" loading="lazy">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <a asp-controller="Character"
+                            asp-action="Details" asp-route-id="@item.Id">
+                            @item.Name
+                        </a>
+                    </h5>
+                    <p class="card-text">@item.Description</p>
+                </div>
+                <div class="card-footer user-select-none">
+                    <a href='@Url.Action("Edit")' class="btn btn-primary">Edit</a>
+                    <a href='@Url.Action("Delete")' class="btn btn-primary">Delete</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
