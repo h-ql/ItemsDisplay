@@ -6,9 +6,13 @@ namespace ItemsDisplay.Services;
 
 public interface ICharacterService 
 {
-    CharacterAttributeViewModel GetByAttrAndSearchString(string CharacterAttribute, string searchString);
+    Task<CharacterAttributeViewModel> GetByAttrAndSearchString(string CharacterAttribute, string searchString);
     
     // List<Character> GetNameByString(string searchString);
-    IEnumerable<Character> GetAll();
-    Character GetByID(int id);
+    Task<IEnumerable<Character>> GetAll();
+    Task<Character> GetByID(int id);
+    Task AddAndSave(Character character);
+
+    Task UpdateAndSave(int id,Character character);
+    Task<Character> FindByID(int id);
 }
