@@ -27,7 +27,7 @@ public class CharacterController : Controller
     // GET: CharacterAttributeViewModel
     public async Task<ActionResult<CharacterAttributeViewModel>> Index(string characterAttribute, string searchString)
     {
-        return View(await _service.GetByAttrAndSearchString(characterAttribute, searchString));
+        return View(await _service.GetAllAsync(characterAttribute, searchString));
     }
     
     // GET: CharacterAttributeViewModel/Details/{id}
@@ -35,7 +35,7 @@ public class CharacterController : Controller
     {
         try {
             _logger.LogInformation("Item with ID : {id} was successful fetch");
-            return View(await _service.GetByID(id));
+            return View(await _service.GetByIdAsync(id));
         } 
         catch (NullReferenceException) {
             return NotFound();
@@ -63,58 +63,84 @@ public class CharacterController : Controller
 					character.ImgURL = $"/collectionImages/{character.Name}.jpg";
                 }
 
-                await _service.AddAndSave(character);
+                await _service.AddCharacterAsync(character);
                 return RedirectToAction(nameof(Index));
         }
         return View(character);
     }
 
-    public async Task<IActionResult> Edit(int id)
+
+    // GET: Character/Edit/5
+    public async Task<IActionResult> Edit(int? id)
     {
-         try {
+        try {
             _logger.LogInformation("Item with ID : {id} was found");
-            return View(await _service.FindByID(id));
+            return View(await _service.FindByIdAsync(id));
         } 
         catch (NullReferenceException) {
             return NotFound();
         }
     }
-    [HttpPost]
 
+    [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(int id, 
                 [Bind("Id,Name,Attribute,AttackType,Description,ImgURL")] Character character)
     {
-        if(id!= character.Id)
+
+        if(id != character.Id)
         {
+            _logger.LogError($"Character with id: {id}, hasn't been found in db.");
             return NotFound();
-        }
-        if (ModelState.IsValid)
+        }  
+        if(ModelState.IsValid)
         {
-            await _service.UpdateAndSave(id, character);
-            return RedirectToAction(nameof(Details));
+            try
+            {
+                await _service.UpdateCharacterAsync(character);
+            }
+            catch (System.Exception e)
+            {
+                _logger.LogError($"Something went wrong inside Edit action: {e.Message}");
+                return StatusCode(500, "Internal server error");
+            }
+            return RedirectToAction(nameof(Index));
         }
         return View(character);
     }
+
+    // POST: Character/Delete/5
+    public async Task<IActionResult> Delete(int? id)
+		{
+			if (id == null)
+			{
+				return NotFound();
+			}
+
+			var hero = await _service.FindByIdAsync(id);
+			if (hero == null)
+			{
+				return NotFound();
+			}
+
+			return View(hero);
+		}
     
+    // POST: Character/Delete/5
+    [HttpPost, ActionName("Delete")]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> DeleteConfirmed(int id)
+    {
+        if(_service.FindByIdAsync(id) is null)
+        {
+           return BadRequest("'id' of object is null");
+        }
+        await _service.DeleteCharacterAsync(id);            
+        return RedirectToAction(nameof(Index));
+    }
 
     #region /swagger
 
-    [HttpGet("/api/Items")]
-    public async Task<ActionResult<IEnumerable<Character>>> GetAllItems() => Ok(await _service.GetAll());
-    
-    
-    [HttpGet("/api/Items/{id:int}")]
-    public async Task<ActionResult<Character>> GetItemByID(int id)
-    {
-        try {
-            _logger.LogInformation("Item with ID : {id} was successful fetch");
-            return Ok(await _service.GetByID(id));
-        } 
-        catch (NullReferenceException) {
-            return NotFound();
-        }
-    }
     #endregion
 
     #region // Privacy & Error default

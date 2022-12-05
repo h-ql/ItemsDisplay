@@ -5,7 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ItemsDisplay.Services;
 
-public class CharacterService : ICharacterService
+public class CharacterService 
+    : 
+    ICharacterService
 {
     private readonly CharacterContext _ctx;
     private readonly ILogger<CharacterService> _logger;
@@ -16,7 +18,7 @@ public class CharacterService : ICharacterService
         _logger = logger;
     }
 
-    public async Task<CharacterAttributeViewModel> GetByAttrAndSearchString(string characterAttribute, string searchString)
+    public async Task<CharacterAttributeViewModel> GetAllAsync(string characterAttribute, string searchString)
     {
         if (_ctx.Characters == null)
         {
@@ -44,10 +46,8 @@ public class CharacterService : ICharacterService
         };
         return charAttributeVM;       
     }
-
-    public async Task<IEnumerable<Character>> GetAll() =>  await _ctx.Characters.ToArrayAsync();
-   
-    public async Task<Character> GetByID(int id)
+    
+    public async Task<Character> GetByIdAsync(int id)
     {
         var output = await _ctx.Characters.FirstOrDefaultAsync(i => id == i.Id);
         if (output == null)
@@ -56,32 +56,40 @@ public class CharacterService : ICharacterService
         }
         return output;
     }
-    public async Task<Character> FindByID(int id)
+    public async Task<Character> FindByIdAsync(int? id)
     {
         var output = await _ctx.Characters.FindAsync(id);
-        if (output == null)
+        if (output is null)
         { 
             throw new NullReferenceException("Item not found");
         }
         return output;
     }    
-
-    public async Task AddAndSave(Character character)
+    
+    public async Task<List<Character>> AddCharacterAsync(Character character)
     {      
-        _ctx.Add(character);
-        await _ctx.SaveChangesAsync();           
+        _ctx.Characters.Add(character);  
+        await _ctx.SaveChangesAsync();
+        return await _ctx.Characters.ToListAsync();        
     }
-    public async Task UpdateAndSave(int id,Character character)
+    
+    public async Task<List<Character>> UpdateCharacterAsync(Character character)
     {
-        if (id != character.Id) 
-        try
-        {
-            _ctx.Update(character);
-            await _ctx.SaveChangesAsync();
+        _ctx.Update(character);
+        await _ctx.SaveChangesAsync();
+        return await _ctx.Characters.ToListAsync();
+    }   
+
+    public async Task<List<Character>> DeleteCharacterAsync(int id)
+    {
+        var hero = await _ctx.Characters.FindAsync(id);
+        if(hero is null)
+        { 
+            throw new NullReferenceException("DeleteCharacterAsync: \"null\" ");
         }
-        catch (DbUpdateConcurrencyException ex)
-        {
-            _logger.LogError("Something occur in CharacterService err msg: {ex.Message}", ex);
-        }
-    }
+
+        _ctx.Characters.Remove(hero);
+        await _ctx.SaveChangesAsync();
+        return await _ctx.Characters.ToListAsync();
+    }    
 }

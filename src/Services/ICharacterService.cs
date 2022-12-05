@@ -6,13 +6,16 @@ namespace ItemsDisplay.Services;
 
 public interface ICharacterService 
 {
-    Task<CharacterAttributeViewModel> GetByAttrAndSearchString(string CharacterAttribute, string searchString);
-    
-    // List<Character> GetNameByString(string searchString);
-    Task<IEnumerable<Character>> GetAll();
-    Task<Character> GetByID(int id);
-    Task AddAndSave(Character character);
+    Task<CharacterAttributeViewModel> GetAllAsync(string CharacterAttribute, string searchString);
+  
+    Task<Character> GetByIdAsync(int id);
+    Task<Character> FindByIdAsync(int? id);
 
-    Task UpdateAndSave(int id,Character character);
-    Task<Character> FindByID(int id);
+    
+   
+
+    Task<List<Character>> AddCharacterAsync(Character character);
+    Task<List<Character>> UpdateCharacterAsync(Character character);
+    Task<List<Character>> DeleteCharacterAsync(int id);
+
 }
