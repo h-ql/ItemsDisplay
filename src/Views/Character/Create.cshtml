@@ -7,7 +7,7 @@
 
 <h1>Create</h1>
 
-<h4>@Config["CollectionType"]</h4>
+<h4> @Config["GameCharacterType"]</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -39,7 +39,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="ImgURL" class="control-label"></label>
-                <input type="file" class="form-control" />
+                <input asp-for="ImgURL" class="form-control" />
                 <span asp-validation-for="ImgURL" class="text-danger"></span>
             </div>
             <div class="form-group">

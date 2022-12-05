@@ -10,10 +10,10 @@ public class Character
     [StringLength(60, MinimumLength = 3), Required]
     public string Name { get; set; } = null!;
 
-    [RegularExpression(@"^[A-Z]+[a-zA-Z\s]*$"), Required, StringLength(15)]
+    [RegularExpression(@"^[A-Z]+[a-zA-Z\s]*$"), Required, StringLength(15, MinimumLength =3)]
     public string Attribute { get; set; } = null!;
 
-    [RegularExpression(@"^[A-Z]+[a-zA-Z\s]*$"), Required, StringLength(15)]
+    [RegularExpression(@"^[A-Z]+[a-zA-Z\s]*$"), Required, StringLength(15, MinimumLength =3)]
     public string AttackType { get; set; } = null!;
     
     public string? Description { get; set; }

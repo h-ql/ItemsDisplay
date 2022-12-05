@@ -42,30 +42,34 @@ public class CharacterController : Controller
         }
     }
 
+    // GET: Character/Create
+    public IActionResult Create()
+    {
+        return View();
+    }
+
+    // To protect from overposting attacks, enable the specific properties you want to bind to.
+    // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Id,Name,Attribute,AttackType,Description")]
-                        Character character, List<IFormFile> files)
+    public async Task<IActionResult> Create(
+        [Bind("Id,Name,Attribute,AttackType,Description,ImgURL")]
+                        Character character)
     {
-        if (ModelState.IsValid)
+        if(!ModelState.IsValid) // TODO: Inspect WHY?
         {
-            if ((files.FirstOrDefault()?.Length ?? 0) > 0)
-				{
-					var filePath = Path.Combine(this.Environment.WebRootPath, 
-						"collectionImages", 
-						character.Name + ".jpg");
-
-					using (var stream = System.IO.File.Create(filePath))
-					{
-						await files.First().CopyToAsync(stream);
-					}
-
-					character.ImgURL = $"/collectionImages/{character.Name}.jpg";
-                }
-
-                await _service.AddCharacterAsync(character);
-                return RedirectToAction(nameof(Index));
+             try
+            {
+                await _service.UpdateCharacterAsync(character);
+            }
+            catch (System.Exception e)
+            {
+                _logger.LogError($"Something went wrong inside Edit action: {e.Message}");
+                return BadRequest();
+            }
+            return RedirectToAction(nameof(Index));
         }
+        _logger.LogWarning("Something happend");
         return View(character);
     }
 
@@ -82,6 +86,8 @@ public class CharacterController : Controller
         }
     }
 
+    // To protect from overposting attacks, enable the specific properties you want to bind to.
+    // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(int id, 
