@@ -56,17 +56,10 @@ public class CharacterController : Controller
         [Bind("Id,Name,Attribute,AttackType,Description,ImgURL")]
                         Character character)
     {
-        if(!ModelState.IsValid) // TODO: Inspect WHY?
+        ModelState.Remove("Id");
+        if(ModelState.IsValid) // TODO: Inspect WHY?
         {
-             try
-            {
-                await _service.UpdateCharacterAsync(character);
-            }
-            catch (System.Exception e)
-            {
-                _logger.LogError($"Something went wrong inside Edit action: {e.Message}");
-                return BadRequest();
-            }
+            await _service.AddCharacterAsync(character);
             return RedirectToAction(nameof(Index));
         }
         _logger.LogWarning("Something happend");
@@ -115,7 +108,7 @@ public class CharacterController : Controller
         return View(character);
     }
 
-    // POST: Character/Delete/5
+    // GET: Character/Delete/5
     public async Task<IActionResult> Delete(int? id)
 		{
 			if (id == null)

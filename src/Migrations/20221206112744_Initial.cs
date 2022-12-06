@@ -7,16 +7,37 @@
 namespace ItemsDisplay.Migrations
 {
     /// <inheritdoc />
-    public partial class SecondMigrate : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Characters",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(type: "TEXT", maxLength: 60, nullable: false),
+                    Attribute = table.Column<string>(type: "TEXT", maxLength: 15, nullable: false),
+                    AttackType = table.Column<string>(type: "TEXT", maxLength: 15, nullable: false),
+                    Description = table.Column<string>(type: "TEXT", nullable: true),
+                    ImgURL = table.Column<string>(type: "TEXT", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Characters", x => x.Id);
+                });
+
             migrationBuilder.InsertData(
                 table: "Characters",
                 columns: new[] { "Id", "AttackType", "Attribute", "Description", "ImgURL", "Name" },
                 values: new object[,]
                 {
+                    { 1, "Melee", "Strength", "Able to transform enemy attacks into self-healing, Abaddon can survive almost any assault. Shielding allies and launching his double-edged coil at a friend or foe, he is always ready to ride into the thick of battle.", "https://lh3.googleusercontent.com/2CYfQT9UPNNDUZteJfXzM-yBn9eIxdR_Dgw7hG6aG9iKCb_KTqzTOXMzYQCXzY7DPFfJkoBI8dmQMB6TIw9vL1gatEzk-SIip02j4FinBmNibF-HusTjbUh0veavNvLKF0jgbwmrag=w2400", "Abaddon" },
+                    { 2, "Melee", "Strength", "Synthesizing extra resources from each and every kill, Alchemist has no trouble gathering the tools needed to destroy his foes. Ambushing enemies with corrosive acid and a host of unstable chemicals, he battles to ensure his greedy escapades can remain uninterrupted.", "https://lh3.googleusercontent.com/bLZS7hRhCDDvmBMkwxE-o_xZPcB_EqOM-WXwzPXOHOYVXS9WLEovCqcBOjAOziSBXiZMPA148K9xy641c8PrJ_UCiH5hDgqK2Vez_0rdCFatsmv4qnHCnLUHof0xyjfU1gcGK51oFQ=w2400", "Alchemist" },
+                    { 3, "Ranged", "Intelligence", "Able to launch a powerful blast of damaging ice across the battlefield, Ancient Apparition threatens to shatter weakened enemies wherever they are. Slowing enemies as he enhances his allies' effectiveness in battle, he is a constant threat to his foes.", "https://lh3.googleusercontent.com/NEnrdtBkJJFCswj5htxDWR-EC7lozKAgTgV3QAtH6USldJ1FcpKsG4CwhgBUYVmWB-BxqhsH3iiXWlEMpSewdQ_SByMw3tND_WnSigDLrxisM1x3cko81ZVWebTq9oNnhfgKFYFPlw=w2400", "Ancient Apparition" },
+                    { 4, "Melee", "Agility", "Should Anti-Mage have the opportunity to gather his full strength, few can stop his assaults. Draining mana from enemies with every strike or teleporting short distances to escape an ambush, cornering him is a challenge for any foe.", "https://lh3.googleusercontent.com/hxNLqoVUvqpYvZNyrINPVQQqr8DEHJJWdZjdpM89uqZnVodKiKcJIkhM7pnOhmc63wu01T_2RKGE9O1kSzxKkM4T8Ayj_cb7RgTghMypGCzPx7Gk_XFygxM6V8tvdkU6DHHm3qyeTQ=w2400", "Anti-Mage" },
                     { 5, "Ranged", "Agility", "A splintered fragment of the same primordial power as the Ancients themselves, Zet the Arc Warden has pledged to see the clash between Radiant and Dire finally end. Assault lone enemies with fluxing energy, or distort space to generate a protective field around allies. Summon a Spark Wraith to patrol an area for enemies to infuse with harmful magic, then create a double of Zet, items and all, to overwhelm your foes.", "https://lh3.googleusercontent.com/PpOVTM88AYFgImSba_yF5UOF2hS75Cue-9dx9bWcjhDZgBeoPAwMBNH2XQW6CBeezHQ2fY9zfFFnnpbcHoEmmrTBO-wWzfvJQC3o7muh2OjLIx33TTVQKmdvIS5y9cosJnLO8Sm-nQ=w2400", "Arc Warden" },
                     { 6, "Melee", "Strength", "One after another, Axe cuts down his foes. Marching ahead of his team, he locks his enemies in battle then counters their blows with a deadly spin of his weapon. Slamming his culling blade through a weakened enemy, he is always charging onward.", "https://lh3.googleusercontent.com/oUTnwEbx0xPlPVRBikCWZD0-Ba0wup0exk0LVn1g3tjja-cZ3o9OutuOopGbanP01ACqbaxDZy5TpoFWpE-IkSwhVpyFzgrgRekcnUtaJIUm-zj7ghvghbhidO_uE9Z7Xt_zuIbcFw=w2400", "Axe" },
                     { 7, "Ranged", "Intelligence", "Bane brings terror to his enemies with his arsenal of disabling abilities. Whether trapping a foe within a contagious nightmare, or gripping an enemy in place, he gives allies all the time they need to slay their enemy.", "https://lh3.googleusercontent.com/JZWgMILBfdrO3K2-fy1f3ebg80L1prQ10H9D2lGYv5W0s88zgX21Mvc6Hwk8r_f10X8cCU1pkGW-XU1IB7fr3OyNbxbxJ_tmwwfvCfTTkxhusipJYM_UFdjt6ODQBUPUJ4eDPS8VUA=w2400", "Bane" },
@@ -31,45 +52,8 @@ namespace ItemsDisplay.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DeleteData(
-                table: "Characters",
-                keyColumn: "Id",
-                keyValue: 5);
-
-            migrationBuilder.DeleteData(
-                table: "Characters",
-                keyColumn: "Id",
-                keyValue: 6);
-
-            migrationBuilder.DeleteData(
-                table: "Characters",
-                keyColumn: "Id",
-                keyValue: 7);
-
-            migrationBuilder.DeleteData(
-                table: "Characters",
-                keyColumn: "Id",
-                keyValue: 8);
-
-            migrationBuilder.DeleteData(
-                table: "Characters",
-                keyColumn: "Id",
-                keyValue: 9);
-
-            migrationBuilder.DeleteData(
-                table: "Characters",
-                keyColumn: "Id",
-                keyValue: 10);
-
-            migrationBuilder.DeleteData(
-                table: "Characters",
-                keyColumn: "Id",
-                keyValue: 11);
-
-            migrationBuilder.DeleteData(
-                table: "Characters",
-                keyColumn: "Id",
-                keyValue: 12);
+            migrationBuilder.DropTable(
+                name: "Characters");
         }
     }
 }

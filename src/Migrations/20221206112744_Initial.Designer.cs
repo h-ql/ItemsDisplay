@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ItemsDisplay.Migrations
 {
     [DbContext(typeof(CharacterContext))]
-    [Migration("20221205054838_Edit_field_attributes")]
-    partial class Editfieldattributes
+    [Migration("20221206112744_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
