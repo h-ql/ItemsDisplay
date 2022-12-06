@@ -22,4 +22,9 @@
     <PackageReference Include="Swashbuckle.Aspnetcore" Version="6.4.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\img\" />
+    <None Include=".db" CopyToPublishDirectory="Always" />
+  </ItemGroup>
+
 </Project>
