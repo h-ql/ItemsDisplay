@@ -33,7 +33,9 @@
         @* <partial name="_ItemCard" model="item" /> *@
         <div class="col">
             <div class="card h-100">
-                <img src="@item.ImgURL" class="card-img-top" alt="Image not found" loading="lazy">
+                <img src="@item.ImgURL" class="card-img-top" alt="Not Found" 
+                    onerror="this.onerror=null;this.src='https://items-display-site.et.r.appspot.com/imgdemo/404.png';" 
+                loading="lazy">
                 <div class="card-body">
                     <h5 class="card-title">
                         <a asp-controller="Character"
