@@ -5,6 +5,11 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 
+// Cloud run:
+// var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
+// var url = $"http://0.0.0.0:{port}";
+// builder.WebHost.UseUrls(url);
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.ConfigureSerilog();

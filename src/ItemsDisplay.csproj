@@ -25,6 +25,9 @@
   <ItemGroup>
     <Folder Include="wwwroot\img\" />
     <None Include=".db" CopyToPublishDirectory="Always" />
+    
+    <None Include="app.yaml"   CopyToOutputDirectory="PreserveNewest" />
+    <None Include="Dockerfile" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
 </Project>
