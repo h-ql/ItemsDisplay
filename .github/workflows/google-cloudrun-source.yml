@@ -84,11 +84,12 @@ jobs:
       - name: Deploy to Cloud Run
         id: deploy
         uses: google-github-actions/deploy-cloudrun@v0
-        with:
-          service: ${{ env.SERVICE }}
-          region: ${{ env.REGION }}
-          # NOTE: If required, update to the appropriate source folder
-          source: ./src
+        # with:
+        #   service: ${{ env.SERVICE }}
+        #   region: ${{ env.REGION }}
+        #   # NOTE: If required, update to the appropriate source folder
+        #   source: ./src
+        run: gcloud app deploy ..\src\bin\Release\net7.0\publish\app.yaml
 
       # If required, use the Cloud Run url output in later steps
       - name: Show Output
