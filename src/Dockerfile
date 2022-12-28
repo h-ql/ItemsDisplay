@@ -10,7 +10,7 @@
 
 FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS build
 WORKDIR /app
-COPY *.csproj .
+COPY ItemsDisplay.csproj .
 RUN dotnet restore
 COPY . .
 RUN dotnet publish -c release -o /output
