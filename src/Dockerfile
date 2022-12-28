@@ -16,6 +16,6 @@ COPY . .
 RUN dotnet publish -c release -o /output
 
 FROM mcr.microsoft.com/dotnet/aspnet
-WORKDIR /output
-COPY --from=build /output .
+WORKDIR /app
+COPY --from=build /app/output .
 ENTRYPOINT [ "dotnet", "ItemsDisplay.dll" ]
