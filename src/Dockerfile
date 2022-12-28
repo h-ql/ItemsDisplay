@@ -9,13 +9,13 @@
 # ENTRYPOINT ["dotnet", "ItemsDisplay.dll"]
 
 FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS build
-WORKDIR /src
+WORKDIR /app
 COPY *.csproj .
 RUN dotnet restore
 COPY . .
-RUN dotnet publish -c release -o /app
+RUN dotnet publish -c release -o /output
 
 FROM mcr.microsoft.com/dotnet/aspnet
-WORKDIR /app
-COPY --from=build /app .
+WORKDIR /output
+COPY --from=build /output .
 ENTRYPOINT [ "dotnet", "ItemsDisplay.dll" ]
