@@ -21,7 +21,7 @@
 # ENTRYPOINT [ "dotnet", "ItemsDisplay.dll" ]
 
 
-FROM mcr.microsoft.com/dotnet/sdk:7.0 AS base
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /app
 COPY ["./src/ItemsDisplay.csproj", "src/"]
 COPY ["./test/test.csproj", "test/"]
