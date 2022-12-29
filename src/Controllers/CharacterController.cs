@@ -57,7 +57,7 @@ public class CharacterController : Controller
                         Character character)
     {
         ModelState.Remove("Id");
-        if(ModelState.IsValid) // TODO: Inspect WHY?
+        if(ModelState.IsValid)
         {
             await _service.AddCharacterAsync(character);
             return RedirectToAction(nameof(Index));
@@ -137,10 +137,6 @@ public class CharacterController : Controller
         await _service.DeleteCharacterAsync(id);            
         return RedirectToAction(nameof(Index));
     }
-
-    #region /swagger
-
-    #endregion
 
     #region // Privacy & Error default
     public IActionResult Privacy() => View();    

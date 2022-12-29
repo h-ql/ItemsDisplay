@@ -8,14 +8,35 @@
 # ENV ASPNETCORE_URLS=http://*:8080
 # ENTRYPOINT ["dotnet", "ItemsDisplay.dll"]
 
-FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+# FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+# WORKDIR /app
+# COPY ItemsDisplay.csproj .
+# RUN dotnet restore
+# COPY . .
+# RUN dotnet publish -c release -o /output
+
+# FROM mcr.microsoft.com/dotnet/aspnet:7.0
+# WORKDIR /output
+# COPY --from=build /output .
+# ENTRYPOINT [ "dotnet", "ItemsDisplay.dll" ]
+
+
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS base
 WORKDIR /app
-COPY ItemsDisplay.csproj .
-RUN dotnet restore
+COPY ["./src/ItemsDisplay.csproj", "src/"]
+COPY ["./test/test.csproj", "test/"]
+
+RUN dotnet restore .\ItemsDisplaySites.sln
+RUN dotnet build --no-restore
 COPY . .
-RUN dotnet publish -c release -o /output
+
+FROM build AS test
+RUN dotnet test --no-build -c Release --results-directory /testresults --logger "trx;LogFileName=itemsdisplay_TestResults.trx" ./test/test.csproj
+
+FROM build AS publish
+RUN dotnet publish "./src/ItemsDisplay.csproj" --no-restore -c Release -o ./app/publish
 
 FROM mcr.microsoft.com/dotnet/aspnet:7.0
-WORKDIR /output
-COPY --from=build /output .
+WORKDIR /publish
+COPY --from=build /publish .
 ENTRYPOINT [ "dotnet", "ItemsDisplay.dll" ]
