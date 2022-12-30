@@ -23,7 +23,7 @@
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /app
-COPY ["src/ItemsDisplay.csproj". "src/"]
+COPY ["src/ItemsDisplay.csproj", "src/"]
 COPY ["test/test.csproj", "test/"]
 
 RUN dotnet restore ./src/ItemsDisplaySites.csproj
