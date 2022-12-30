@@ -23,18 +23,18 @@
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /app
-COPY ItemsDisplay.csproj .
-COPY test.csproj .
+COPY ItemsDisplay.csproj ./src
+COPY ../test/test.csproj ./test
 
-RUN dotnet restore .\ItemsDisplaySites.sln
+RUN dotnet restore ./src/ItemsDisplaySites.csproj
 RUN dotnet build --no-restore
 COPY . .
 
 FROM build AS test
-RUN dotnet test --no-build -c Release --results-directory /testresults --logger "trx;LogFileName=itemsdisplay_TestResults.trx" ./app/test.csproj
+RUN dotnet test --no-build -c Release --results-directory /testresults --logger "trx;LogFileName=itemsdisplay_TestResults.trx" ./app/test/test.csproj
 
 FROM build AS publish
-RUN dotnet publish ./ItemsDisplay.csproj --no-restore -c Release -o ./app/publish
+RUN dotnet publish ./app/ItemsDisplay.csproj --no-restore -c Release -o ./app/src/publish
 
 FROM mcr.microsoft.com/dotnet/aspnet:7.0
 WORKDIR /publish
