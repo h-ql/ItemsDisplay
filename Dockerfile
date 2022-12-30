@@ -31,10 +31,10 @@ RUN dotnet build --no-restore
 COPY . .
 
 FROM build AS test
-RUN dotnet test --no-build -c Release --results-directory /testresults --logger "trx;LogFileName=itemsdisplay_TestResults.trx" ./app/test/test.csproj
+RUN dotnet test --no-build -c Release --results-directory /testresults --logger "trx;LogFileName=itemsdisplay_TestResults.trx" ./test/test.csproj
 
 FROM build AS publish
-RUN dotnet publish ./app/src/ItemsDisplay.csproj --no-restore -c Release -o ./app/src/publish
+RUN dotnet publish "./src/ItemsDisplay.csproj" --no-restore -c Release -o ./app/src/publish
 
 FROM mcr.microsoft.com/dotnet/aspnet:7.0
 WORKDIR /publish
