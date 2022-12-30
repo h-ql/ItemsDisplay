@@ -34,7 +34,7 @@ RUN dotnet build --no-restore ./*.sln
 
 FROM build AS test
 WORKDIR /app/test
-RUN dotnet test --no-build -c Release --results-directory /testresults --logger "trx;LogFileName=itemsdisplay_TestResults.trx" 
+RUN dotnet test --no-restore -c Release --results-directory /TestResult --logger "trx;LogFileName=itemsdisplay_Test-Results.trx" 
 
 FROM build AS publish
 WORKDIR /app/src
