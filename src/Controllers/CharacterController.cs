@@ -53,10 +53,10 @@ public class CharacterController : Controller
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(
-        [Bind("Id,Name,Attribute,AttackType,Description,ImgURL")]
+        [Bind("Name,Attribute,AttackType,Description,ImgURL")]
                         Character character)
     {
-        ModelState.Remove("Id");
+        // ModelState.Remove("Id");
         if(ModelState.IsValid)
         {
             await _service.AddCharacterAsync(character);
