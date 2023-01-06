@@ -7,8 +7,7 @@
 <style>
 body {
     margin-bottom: 60px;
-    background: #121212;;
-    color: white;
+    background:linear-gradient(to right, rgba(35,17,114,0.800) 0%, rgba(35,17,114,0.298) 33%, rgba(15,15,15,1.000) 100%); 
 }
 </style>
 
@@ -26,16 +25,19 @@ body {
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
+            <br>
             <div class="form-group">
                 <label asp-for="Attribute" class="control-label"></label>
                 <input asp-for="Attribute" class="form-control" />
                 <span asp-validation-for="Attribute" class="text-danger"></span>
             </div>
+            <br>
             <div class="form-group">
                 <label asp-for="AttackType" class="control-label"></label>
                 <input asp-for="AttackType" class="form-control" />
                 <span asp-validation-for="AttackType" class="text-danger"></span>
             </div>
+            <br>
             <div class="form-group">
                 <label asp-for="Description" class="control-label" for="exampleFormControlTextarea1"></label>
                     
@@ -44,12 +46,13 @@ body {
                 </textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
+            <br>
             <div class="form-group">
                 <label asp-for="ImgURL" class="control-label"></label>
                 <input asp-for="ImgURL" class="form-control" />
                 <span asp-validation-for="ImgURL" class="text-danger"></span>
             </div>
-            <br>
+            <hr>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>

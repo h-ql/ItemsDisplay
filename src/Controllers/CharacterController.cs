@@ -54,11 +54,23 @@ public class CharacterController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(
         [Bind("Name,Attribute,AttackType,Description,ImgURL")]
-                        Character character)
+                        Character character, List<IFormFile> files)
     {
-        // ModelState.Remove("Id");
         if(ModelState.IsValid)
         {
+            if ((files.FirstOrDefault()?.Length ?? 0) > 0)
+				{
+					var filePath = Path.Combine(this.Environment.WebRootPath, 
+						"characterImages", 
+						character.Name + ".png");
+
+					using (var stream = System.IO.File.Create(filePath))
+					{
+						await files.First().CopyToAsync(stream);
+					}
+
+					character.ImgURL = $"/UploadIMG/{character.Name}.png";
+                }
             await _service.AddCharacterAsync(character);
             return RedirectToAction(nameof(Index));
         }
