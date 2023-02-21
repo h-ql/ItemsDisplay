@@ -25,6 +25,7 @@
   <ItemGroup>
     <Folder Include="wwwroot\img\" />
     <None Include=".db" CopyToPublishDirectory="Always" />
+    <Folder Include="wwwroot\UploadImages\" />
     
     <!-- <None Include="app.yaml"   CopyToOutputDirectory="PreserveNewest" /> -->
   </ItemGroup>
