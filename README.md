@@ -4,7 +4,7 @@
 
 ## Introduction
 
-This is repository of the Dota 2 game characters with content displaying. This repository is a sample web application used monolithic architecture with ASP.Net Core MVC pattern.
+This is repository of the [Dota 2 game game content website](https://itemsdisplay-vmk74xsjsa-uc.a.run.app/). This repository is a sample web application used monolithic architecture with ASP.Net Core MVC pattern.
 
    [![Website screen shot](docs/HomePageScreenShot.png)](https://itemsdisplay-vmk74xsjsa-uc.a.run.app/)
 
@@ -64,6 +64,24 @@ The website is simple for storing to web page items been collected alongside wit
     ```
 
 - The Website using 3rd-party libary name Serilog to configuring logging.
+    ``` json
+        "WriteTo": [
+        {
+            "Name": "Console",
+            "Args": {
+            "outputTemplate": "[{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} {CorrelationId} {Level:u3}] {Username} {Message:lj}{NewLine}{Exception}"
+            }
+        },
+        {
+            "Name": "File",
+            "Args": {
+            "path": "../Log/serilog.log",
+            "rollingInterval": "Day",
+            "outputTemplate": "[{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} {CorrelationId} {Level:u3}] {Username} {Message:lj}{NewLine}{Exception}"
+            }
+        }
+        ]
+    ```
 
     ![Website Logging screen shot](docs/logging-img.png)
 
