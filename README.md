@@ -4,7 +4,7 @@
 
 ## Introduction
 
-This is repository of the [Dota 2 game game content website](https://itemsdisplay-vmk74xsjsa-uc.a.run.app/). This repository is a sample web application used monolithic architecture with ASP.Net Core MVC pattern.
+This is repository of the [Dota 2 game content website](https://itemsdisplay-vmk74xsjsa-uc.a.run.app/). This repository is a sample web application used monolithic architecture with ASP.Net Core MVC pattern.
 
    [![Website screen shot](docs/HomePageScreenShot.png)](https://itemsdisplay-vmk74xsjsa-uc.a.run.app/)
 
